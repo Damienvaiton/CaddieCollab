@@ -6,7 +6,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
 
-const MyStack = () => {};
 
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
