@@ -6,8 +6,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
 
-const MyStack = () => {
-};
+const MyStack = () => {};
 
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
@@ -22,8 +21,16 @@ type HomeScreenNavigationProp = NativeStackNavigationProp<
 >;
 
 function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
+	React.useLayoutEffect(() => {
+		navigation.setOptions({
+			title: "Vos Listes",
+			headerStyle: {
+				backgroundColor: "#0033ff",
+			},
+		});
+	});
 	return (
-		<View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+		<View style={styles.container}>
 			<Text>Home Screen</Text>
 			<Button
 				title="Go to Details"
@@ -35,8 +42,8 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
 
 function DetailsScreen() {
 	return (
-		<View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-			<Text>Details Screen</Text>
+		<View style={styles.container}>
+			<Text style={styles.textPrimary}>Details Screen</Text>
 		</View>
 	);
 }
@@ -55,8 +62,11 @@ export default function App() {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#fff",
+		backgroundColor: "#00B2FF",
 		alignItems: "center",
 		justifyContent: "center",
+	},
+	textPrimary: {
+		color: "#00B2FF",
 	},
 });
