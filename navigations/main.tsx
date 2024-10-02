@@ -1,14 +1,14 @@
-import { NavigationContainer } from "@react-navigation/native";
-
-import HomeScreen from "./pages/home";
-import SharedLists from "./pages/YourHomeScreen";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import ProfileScreen from "./pages/Profile";
+
+// Pages imports
+import HomeScreen from "./pages/HomeScreen";
+import SharedListsScreen from "./pages/SharedListsScreen";
+import ProfileScreen from "./pages/ProfileScreen";
 
 const Stack = createBottomTabNavigator();
-
 
 function MainController() {
 	return (
@@ -31,7 +31,7 @@ function MainController() {
 				})}
 			>
 				<Stack.Screen name="Home" component={HomeScreen} />
-				<Stack.Screen name="Shared Lists" component={SharedLists} />
+				<Stack.Screen name="Shared Lists" component={SharedListsScreen} />
 				<Stack.Screen name="Profile" component={ProfileScreen} />
 			</Stack.Navigator>
 		</NavigationContainer>

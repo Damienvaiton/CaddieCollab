@@ -11,7 +11,7 @@ type RootStackParamList = {
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
-export default function HomeScreen({
+export default function SharedListsScreen({
 	navigation,
 }: {
 	navigation: HomeScreenNavigationProp;
