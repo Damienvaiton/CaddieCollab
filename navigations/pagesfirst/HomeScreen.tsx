@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import {
-	Button,
 	Text,
 	View,
 	Image,
 	TouchableOpacity,
 	Modal,
 	Alert,
+	Pressable,
 } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { ScrollView } from "react-native-gesture-handler";
@@ -98,7 +98,7 @@ export default function HomeScreen({
 			<View style={styles.fabContainer}>
 				<TouchableOpacity
 					onPress={() => {
-						alert("Ajouter une liste");
+						console.log({ modalVisible });
 					}}
 				>
 					<Text style={styles.buttonadd}>+</Text>
