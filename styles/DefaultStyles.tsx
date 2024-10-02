@@ -53,24 +53,6 @@ const styles = StyleSheet.create({
 		textAlign: "center",
 		borderRadius: 50,
 	},
-	modalContainer: {
-		flex: 1,
-		justifyContent: "center",
-		alignItems: "center",
-		backgroundColor: "rgba(0, 0, 0, 0.5)", // Fond semi-transparent
-	},
-	modalContent: {
-		width: "80%",
-		backgroundColor: "white",
-		borderRadius: 10,
-		padding: 20,
-		alignItems: "center",
-	},
-	modalTitle: {
-		fontSize: 18,
-		fontWeight: "bold",
-		marginBottom: 10,
-	},
 	buttonClose: {
 		marginTop: 20,
 		padding: 10,
@@ -80,6 +62,7 @@ const styles = StyleSheet.create({
 	buttonText: {
 		color: "white",
 		fontWeight: "bold",
+		fontFamily: "Arial",
 	},
 });
 

@@ -98,20 +98,7 @@ export default function HomeScreen({
 			<View style={styles.fabContainer}>
 				<TouchableOpacity
 					onPress={() => {
-						Alert.alert(
-							"Ajouter une liste",
-							"Voulez-vous ajouter une liste ?",
-							[
-								{
-									text: "Annuler",
-									style: "cancel",
-								},
-								{
-									text: "Oui",
-									onPress: () => setModalVisible(true),
-								},
-							]
-						);
+						alert("Ajouter une liste");
 					}}
 				>
 					<Text style={styles.buttonadd}>+</Text>
