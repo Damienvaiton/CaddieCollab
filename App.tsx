@@ -1,11 +1,10 @@
 import * as React from "react";
 import { StatusBar } from "expo-status-bar";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View, Image } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
-
 
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
@@ -24,8 +23,18 @@ function HomeScreen({ navigation }: { navigation: HomeScreenNavigationProp }) {
 		navigation.setOptions({
 			title: "Vos Listes",
 			headerStyle: {
-				backgroundColor: "#0033ff",
+				backgroundColor: "#00b2ff",
 			},
+			headerTintColor: "#fff",
+			headerTitleStyle: {
+				fontWeight: "bold",
+			},
+			headerRight: () => (
+				<Image
+					source={require("./assets/logo.png")}
+					style={{ width: 40, height: 40, marginRight: 5 }}
+				/>
+			),
 		});
 	});
 	return (
@@ -61,7 +70,7 @@ export default function App() {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#00B2FF",
+		backgroundColor: "#1abaff",
 		alignItems: "center",
 		justifyContent: "center",
 	},
