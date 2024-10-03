@@ -7,6 +7,7 @@ import {
 	Modal,
 	Alert,
 	Pressable,
+	TextInput,
 } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { ScrollView } from "react-native-gesture-handler";
@@ -76,7 +77,29 @@ export default function HomeScreen({
 						key={list.id}
 						style={styles.listItem}
 						onPress={() => {
-							alert(`Liste: ${list.name}`);
+							console.log(
+								`Ouverture de la liste ${list.name} dont l'id est ${list.id}`
+							);
+						}}
+						onLongPress={() => {
+							Alert.alert("Que voulez-vous faire ?", "", [
+								{
+									text: "Annuler",
+									style: "cancel",
+									onPress: () => console.log("Annulation de la suppression"),
+								},
+								{
+									text: "Supprimer",
+									style: "destructive",
+									onPress: () =>
+										console.log("Suppression de la liste n°" + list.id),
+								},
+								{
+									text: "Modifier",
+									style: "destructive",
+									onPress: () => console.log("Modification de la liste n°" + list.id),
+								},
+							]);
 						}}
 					>
 						<Text style={styles.textItemPrimary}>{list.name}</Text>
@@ -109,6 +132,11 @@ export default function HomeScreen({
 				<View style={styles.centeredView}>
 					<View style={styles.modalView}>
 						<Text style={styles.modalTextTitle}>Ajouter une liste</Text>
+						<TextInput
+							style={styles.modalTextInput}
+							placeholder="Nom de la liste"
+							onChangeText={(text) => console.log(`L'appareil a dit ${text}`)}
+						/>
 						<View
 							style={{
 								flexDirection: "row",
@@ -117,16 +145,20 @@ export default function HomeScreen({
 							}}
 						>
 							<Pressable
-								style={[styles.buttonClose]}
+								style={[styles.buttonClose, { backgroundColor: "red" }]}
 								onPress={() => setModalVisible(!modalVisible)}
 							>
-								<Text style={styles.buttonText}>Hide Modal</Text>
+								<Text style={styles.buttonText}>Annuler</Text>
 							</Pressable>
 							<Pressable
-								style={[styles.buttonClose]}
+								style={[
+									styles.buttonClose,
+									{ backgroundColor: "green" },
+									{ marginLeft: 10 },
+								]}
 								onPress={() => setModalVisible(!modalVisible)}
 							>
-								<Text style={styles.buttonText}>Hide Modal</Text>
+								<Text style={styles.buttonText}>Valider</Text>
 							</Pressable>
 						</View>
 					</View>

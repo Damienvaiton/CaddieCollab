@@ -1,4 +1,5 @@
 import { StyleSheet, Text } from "react-native";
+import { rgbaColor } from "react-native-reanimated/lib/typescript/reanimated2/Colors";
 
 const styles = StyleSheet.create({
 	container: {
@@ -108,6 +109,14 @@ const styles = StyleSheet.create({
 	modalTextTitle: {
 		marginBottom: 15,
 		textAlign: "center",
+		fontFamily: "Itim",
+		fontSize: 35,
+	},
+	modalTextInput: {
+		height: 40,
+		borderColor: "gray",
+		borderWidth: 1,
+		width: "99%",
 	},
 });
 
