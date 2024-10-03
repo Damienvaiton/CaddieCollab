@@ -97,7 +97,8 @@ export default function HomeScreen({
 								{
 									text: "Modifier",
 									style: "destructive",
-									onPress: () => console.log("Modification de la liste n°" + list.id),
+									onPress: () =>
+										console.log("Modification de la liste n°" + list.id),
 								},
 							]);
 						}}
