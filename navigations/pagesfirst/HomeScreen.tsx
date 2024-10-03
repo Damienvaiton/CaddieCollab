@@ -81,29 +81,46 @@ export default function HomeScreen({
 								`Ouverture de la liste ${list.name} dont l'id est ${list.id}`
 							);
 						}}
-						onLongPress={() => {
-							Alert.alert("Que voulez-vous faire ?", "", [
-								{
-									text: "Annuler",
-									style: "cancel",
-									onPress: () => console.log("Annulation de la suppression"),
-								},
-								{
-									text: "Supprimer",
-									style: "destructive",
-									onPress: () =>
-										console.log("Suppression de la liste n°" + list.id),
-								},
-								{
-									text: "Modifier",
-									style: "destructive",
-									onPress: () =>
-										console.log("Modification de la liste n°" + list.id),
-								},
-							]);
-						}}
 					>
-						<Text style={styles.textItemPrimary}>{list.name}</Text>
+						<View
+							style={{
+								flex: 1,
+								flexDirection: "row",
+								justifyContent: "space-between",
+							}}
+						>
+							<Text style={styles.textItemPrimary}>{list.name}</Text>
+							<TouchableOpacity
+								key={list.id}
+								onPress={() => {
+									Alert.alert("Que voulez-vous faire ?", "", [
+										{
+											text: "Annuler",
+											style: "cancel",
+											onPress: () =>
+												console.log("Annulation de la suppression"),
+										},
+										{
+											text: "Supprimer",
+											style: "destructive",
+											onPress: () =>
+												console.log("Suppression de la liste n°" + list.id),
+										},
+										{
+											text: "Modifier",
+											style: "destructive",
+											onPress: () =>
+												console.log("Modification de la liste n°" + list.id),
+										},
+									]);
+								}}
+							>
+								<Image
+									source={require("../../assets/tp.webp")}
+									style={{ width: 20, height: 20 }}
+								/>
+							</TouchableOpacity>
+						</View>
 						<View
 							style={{
 								alignItems: "flex-end",
