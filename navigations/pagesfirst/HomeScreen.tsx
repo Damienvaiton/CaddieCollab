@@ -98,6 +98,27 @@ export default function HomeScreen({
 			<View style={styles.fabContainer}>
 				<TouchableOpacity
 					onPress={() => {
+						setModalVisible(true);
+						<Modal
+							animationType="slide"
+							transparent={true}
+							visible={modalVisible}
+							onRequestClose={() => {
+								Alert.alert("Modal has been closed.");
+								setModalVisible(!modalVisible);
+							}}
+						>
+							<View style={styles.centeredView}>
+								<Text>Hello</Text>
+								<Pressable
+									style={[styles.buttonClose]}
+									onPress={() => setModalVisible(!modalVisible)}
+								>
+									<Text style={styles.buttonText}>Fermer</Text>
+								</Pressable>
+							</View>
+						</Modal>;
+
 						console.log({ modalVisible });
 					}}
 				>
