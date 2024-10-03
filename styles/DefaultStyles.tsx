@@ -70,11 +70,13 @@ const styles = StyleSheet.create({
 		marginTop: 22,
 	},
 	modalView: {
-		margin: 20,
+		flex: 1,
+		justifyContent: "center",
+		alignItems: "center",
+		marginTop: 22,
 		backgroundColor: "white",
 		borderRadius: 20,
 		padding: 35,
-		alignItems: "center",
 		shadowColor: "#000",
 		shadowOffset: {
 			width: 0,
@@ -83,6 +85,7 @@ const styles = StyleSheet.create({
 		shadowOpacity: 0.25,
 		shadowRadius: 4,
 		elevation: 5,
+		width: "90%",
 	},
 	button: {
 		borderRadius: 20,
@@ -96,6 +99,9 @@ const styles = StyleSheet.create({
 		color: "white",
 		fontWeight: "bold",
 		textAlign: "center",
+	},
+	modalBase: {
+		backgroundColor: "white",
 	},
 	modalText: {
 		marginBottom: 15,

@@ -40,7 +40,7 @@ export default function HomeScreen({
 }: {
 	navigation: HomeScreenNavigationProp;
 }) {
-	const [modalVisible, setModalVisible] = useState(false); // État pour la modal
+	const [modalVisible, setModalVisible] = useState(false);
 
 	React.useLayoutEffect(() => {
 		navigation.setOptions({
@@ -55,11 +55,7 @@ export default function HomeScreen({
 			headerRight: () => (
 				<Image
 					source={require("../../assets/logo.png")}
-					style={{
-						width: 40,
-						height: 40,
-						marginRight: 5,
-					}}
+					style={{ width: 40, height: 40, marginRight: 5 }}
 				/>
 			),
 		});
@@ -95,33 +91,28 @@ export default function HomeScreen({
 					</TouchableOpacity>
 				))}
 			</ScrollView>
-			<View style={styles.fabContainer}>
-				<TouchableOpacity
-					onPress={() => {
-						setModalVisible(true);
-						<Modal
-							animationType="slide"
-							transparent={true}
-							visible={modalVisible}
-							onRequestClose={() => {
-								Alert.alert("Modal has been closed.");
-								setModalVisible(!modalVisible);
-							}}
-						>
-							<View style={styles.centeredView}>
-								<Text>Hello</Text>
-								<Pressable
-									style={[styles.buttonClose]}
-									onPress={() => setModalVisible(!modalVisible)}
-								>
-									<Text style={styles.buttonText}>Fermer</Text>
-								</Pressable>
-							</View>
-						</Modal>;
+			<Modal
+				animationType="slide"
+				transparent={true}
+				visible={modalVisible}
+				onRequestClose={() => {
+					Alert.alert("Modal has been closed.");
+					setModalVisible(!modalVisible);
+				}}
+			>
+				<View style={styles.modalView}>
+					<Text>Hello</Text>
+					<Pressable
+						style={styles.buttonClose}
+						onPress={() => setModalVisible(!modalVisible)}
+					>
+						<Text style={styles.buttonText}>Fermer</Text>
+					</Pressable>
+				</View>
+			</Modal>
 
-						console.log({ modalVisible });
-					}}
-				>
+			<View style={styles.fabContainer}>
+				<TouchableOpacity onPress={() => setModalVisible(true)}>
 					<Text style={styles.buttonadd}>+</Text>
 				</TouchableOpacity>
 			</View>
