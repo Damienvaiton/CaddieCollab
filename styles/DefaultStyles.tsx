@@ -11,17 +11,17 @@ const styles = StyleSheet.create({
 	textItemPrimary: {
 		fontFamily: "Itim",
 		color: "#ffffff",
-		fontSize: 20,
+		fontSize: 26,
 	},
 	textItemSecondary: {
+		fontFamily: "Itim",
 		color: "#ffffff",
 		fontSize: 16,
-		fontStyle: "italic",
 	},
 
 	listItem: {
 		color: "#ffffff",
-		backgroundColor: "orange",
+		backgroundColor: "#CB4A02",
 		padding: 10,
 		marginVertical: 8,
 		marginHorizontal: 16,
