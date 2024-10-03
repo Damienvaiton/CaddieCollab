@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text } from "react-native";
 
 const styles = StyleSheet.create({
 	container: {
@@ -8,9 +8,9 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 	},
 	textItemPrimary: {
+		fontFamily: "Itim",
 		color: "#ffffff",
 		fontSize: 20,
-		fontWeight: "bold",
 	},
 	textItemSecondary: {
 		color: "#ffffff",

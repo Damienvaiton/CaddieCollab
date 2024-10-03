@@ -12,6 +12,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { ScrollView } from "react-native-gesture-handler";
 
 import styles from "../../styles/DefaultStyles";
+import { useCustomFonts } from "../../styles/useCustomFonts";
 
 type RootStackParamList = {
 	Home: undefined;
@@ -42,6 +43,8 @@ export default function HomeScreen({
 }) {
 	const [modalVisible, setModalVisible] = useState(false);
 
+	const fontsLoaded = useCustomFonts(); // Chargement des polices
+
 	React.useLayoutEffect(() => {
 		navigation.setOptions({
 			title: "Vos Listes",
@@ -61,6 +64,10 @@ export default function HomeScreen({
 		});
 	}, [navigation]);
 
+	if (!fontsLoaded) {
+		return <Text>Chargement...</Text>; // Afficher un écran de chargement en attendant
+	}
+
 	return (
 		<View style={{ flex: 1 }}>
 			<ScrollView style={styles.list}>
@@ -75,18 +82,17 @@ export default function HomeScreen({
 						<Text style={styles.textItemPrimary}>{list.name}</Text>
 						<View
 							style={{
-								flexDirection: "row",
-								justifyContent: "space-between",
-								alignItems: "center",
+								alignItems: "flex-end",
 							}}
 						>
-							<Text style={{ ...styles.textItemPrimary, color: "orange" }}>
-								{list.name}
-							</Text>
-							<Text style={styles.textItemSecondary}>
-								{list.count}{" "}
-								{list.count === 1 || list.count === 0 ? "élément" : "éléments"}
-							</Text>
+							<View>
+								<Text style={styles.textItemSecondary}>
+									{list.count}{" "}
+									{list.count === 1 || list.count === 0
+										? "élément"
+										: "éléments"}
+								</Text>
+							</View>
 						</View>
 					</TouchableOpacity>
 				))}
