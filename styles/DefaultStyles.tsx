@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
 		borderRadius: 50,
 	},
 	buttonClose: {
-		marginTop: 20,
+		marginTop: 12,
 		padding: 10,
 		backgroundColor: "#00b2ff",
 		borderRadius: 5,
@@ -70,13 +70,12 @@ const styles = StyleSheet.create({
 		marginTop: 22,
 	},
 	modalView: {
-		flex: 1,
-		justifyContent: "center",
-		alignItems: "center",
-		marginTop: 22,
+		width: "90%", // Largeur en pourcentage de l'écran
+		height: 300, // Hauteur fixe, modifiable selon tes besoins
 		backgroundColor: "white",
 		borderRadius: 20,
 		padding: 35,
+		alignItems: "center",
 		shadowColor: "#000",
 		shadowOffset: {
 			width: 0,
@@ -85,7 +84,6 @@ const styles = StyleSheet.create({
 		shadowOpacity: 0.25,
 		shadowRadius: 4,
 		elevation: 5,
-		width: "90%",
 	},
 	button: {
 		borderRadius: 20,
@@ -104,6 +102,10 @@ const styles = StyleSheet.create({
 		backgroundColor: "white",
 	},
 	modalText: {
+		marginBottom: 15,
+		textAlign: "center",
+	},
+	modalTextTitle: {
 		marginBottom: 15,
 		textAlign: "center",
 	},

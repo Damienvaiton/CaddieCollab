@@ -92,7 +92,7 @@ export default function HomeScreen({
 				))}
 			</ScrollView>
 			<Modal
-				animationType="slide"
+				animationType="fade"
 				transparent={true}
 				visible={modalVisible}
 				onRequestClose={() => {
@@ -100,14 +100,30 @@ export default function HomeScreen({
 					setModalVisible(!modalVisible);
 				}}
 			>
-				<View style={styles.modalView}>
-					<Text>Hello</Text>
-					<Pressable
-						style={styles.buttonClose}
-						onPress={() => setModalVisible(!modalVisible)}
-					>
-						<Text style={styles.buttonText}>Fermer</Text>
-					</Pressable>
+				<View style={styles.centeredView}>
+					<View style={styles.modalView}>
+						<Text style={styles.modalTextTitle}>Ajouter une liste</Text>
+						<View
+							style={{
+								flexDirection: "row",
+								justifyContent: "space-between",
+								alignItems: "center",
+							}}
+						>
+							<Pressable
+								style={[styles.buttonClose]}
+								onPress={() => setModalVisible(!modalVisible)}
+							>
+								<Text style={styles.buttonText}>Hide Modal</Text>
+							</Pressable>
+							<Pressable
+								style={[styles.buttonClose]}
+								onPress={() => setModalVisible(!modalVisible)}
+							>
+								<Text style={styles.buttonText}>Hide Modal</Text>
+							</Pressable>
+						</View>
+					</View>
 				</View>
 			</Modal>
 
