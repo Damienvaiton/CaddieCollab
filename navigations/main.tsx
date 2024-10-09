@@ -33,7 +33,7 @@ function MainController() {
 					})}
 				>
 					<Stack.Screen name="Home" component={HomeScreen} />
-					<Stack.Screen name="Shared Lists" component={SharedListsScreen} />
+					<Stack.Screen name="Listes partagées" component={SharedListsScreen} />
 					<Stack.Screen name="Profile" component={ProfileScreen} />
 				</Stack.Navigator>
 			</NavigationContainer>

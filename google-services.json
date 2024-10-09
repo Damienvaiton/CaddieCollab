@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "356879038325",
+    "project_id": "caddiecollab",
+    "storage_bucket": "caddiecollab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:356879038325:android:32065df17c0701531dc53c",
+        "android_client_info": {
+          "package_name": "com.damienvaiton.caddiecollab"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTOSbaK28SV-CcM19MPTB_LzAwH50svi8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

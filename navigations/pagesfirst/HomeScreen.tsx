@@ -91,7 +91,6 @@ export default function HomeScreen({
 						>
 							<Text style={styles.textItemPrimary}>{list.name}</Text>
 							<TouchableOpacity
-								key={list.id}
 								onPress={() => {
 									Alert.alert("Que voulez-vous faire ?", "", [
 										{
