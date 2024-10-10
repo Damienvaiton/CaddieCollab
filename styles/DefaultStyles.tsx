@@ -118,6 +118,14 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		width: "99%",
 	},
+	input: {
+		height: 40,
+		width: "90%",
+		margin: 12,
+		borderWidth: 1,
+		borderRadius: 5,
+		padding: 10,
+	},
 });
 
 export default styles;
