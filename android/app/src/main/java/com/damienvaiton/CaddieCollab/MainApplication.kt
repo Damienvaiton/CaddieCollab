@@ -1,4 +1,4 @@
-package com.damienvaiton.CaddieCollab
+package com.damienvaiton.caddiecollab
 
 import android.app.Application
 import android.content.res.Configuration

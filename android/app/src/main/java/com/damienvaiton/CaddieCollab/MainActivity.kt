@@ -1,4 +1,4 @@
-package com.damienvaiton.CaddieCollab
+package com.damienvaiton.caddiecollab
 
 import android.os.Build
 import android.os.Bundle

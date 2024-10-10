@@ -13,6 +13,7 @@
     },
     "ios": {
       "googleServicesFile": "./GoogleService-Info.plist",
+      "bundleIdentifier": "com.damienvaiton.caddiecollab",
       "supportsTablet": true
     },
     "android": {
@@ -21,7 +22,7 @@
         "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.damienvaiton.CaddieCollab"
+      "package": "com.damienvaiton.caddiecollab"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -34,6 +35,7 @@
     "plugins": [
       "expo-font",
       "@react-native-firebase/app",
+      "@react-native-firebase/auth",
       [
         "expo-build-properties",
         {
