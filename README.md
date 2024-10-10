@@ -1,5 +1,9 @@
 # CaddieCollab
 
+working time : [![wakatime](https://wakatime.com/badge/user/018e1df1-c49b-4c34-bf12-dc3822f0bc5c/project/018e9aad-8b1a-43c6-9557-2418cdd75c31.svg)](https://wakatime.com/badge/user/018e1df1-c49b-4c34-bf12-dc3822f0bc5c/project/018e9aad-8b1a-43c6-9557-2418cdd75c31)
+
+## Table of Contents
+
 ## Project Description
 
 CaddieCollab is a collaborative shopping list application that helps users manage and share their shopping lists with family and friends.
