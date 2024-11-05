@@ -39,11 +39,13 @@ const userSlice = createSlice({
 			state.password = "";
 			state.lastname = "";
 			state.firstname = "";
-			state.username = "";
 			state.sharedid = "";
+		},
+		getUser: (state) => {
+			return state;
 		},
 	},
 });
 
-export const { setUser, clearUser } = userSlice.actions;
+export const { setUser, clearUser, getUser } = userSlice.actions;
 export default userSlice.reducer;

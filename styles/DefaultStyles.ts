@@ -8,6 +8,12 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 	},
+	containerlvl2: {
+		flex: 1,
+		backgroundColor: "#B5E9FF",
+		alignItems: "center",
+		justifyContent: "center",
+	},
 	textItemPrimary: {
 		fontFamily: "Itim",
 		color: "#ffffff",
@@ -122,9 +128,11 @@ const styles = StyleSheet.create({
 		height: 40,
 		width: "90%",
 		margin: 12,
-		borderWidth: 1,
+		borderWidth: 2,
 		borderRadius: 5,
 		padding: 10,
+		borderColor: "#FFCC33",
+		backgroundColor: "#ffffff",
 	},
 });
 
