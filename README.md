@@ -22,10 +22,12 @@ Choose one of the following options:
 
 1. Open the app in a emulator of a mobile device.
 
+Android : 
 ```bash
 npx expo run:android
 ```
 
+IOS : 
 ```bash
 npx expo run:ios
 ```
