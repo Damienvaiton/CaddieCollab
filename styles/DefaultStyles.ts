@@ -77,8 +77,8 @@ const styles = StyleSheet.create({
 		marginTop: 22,
 	},
 	modalView: {
-		width: "90%", // Largeur en pourcentage de l'écran
-		height: 300, // Hauteur fixe, modifiable selon tes besoins
+		width: "90%", 
+		height: 300, 
 		backgroundColor: "white",
 		borderRadius: 20,
 		padding: 35,

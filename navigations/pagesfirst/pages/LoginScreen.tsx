@@ -6,6 +6,9 @@ import styles from "../../../styles/DefaultStyles";
 import { RootState } from "../../../store/store";
 
 import auth from "@react-native-firebase/auth";
+import firestore from "@react-native-firebase/firestore";
+
+
 import { StackNavigationProp } from "@react-navigation/stack";
 import { setUser } from "../../../store/userSlice";
 
@@ -13,6 +16,7 @@ type RootStackParamList = {
 	Home: undefined;
 	Login: undefined;
 	Register: undefined;
+	Profile: undefined;
 };
 
 type LoginScreenNavigationProp = StackNavigationProp<
@@ -67,7 +71,7 @@ export default function LoginScreen() {
 									password: password,
 								})
 							);
-							navigation.navigate("Home");
+							navigation.navigate("Profile");
 						})
 						.catch((error) => {
 							if (error.code === "auth/wrong-password") {

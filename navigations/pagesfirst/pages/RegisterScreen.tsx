@@ -4,6 +4,8 @@ import { View, TextInput, Button, Image, Pressable } from "react-native";
 import styles from "../../../styles/DefaultStyles";
 
 import auth from "@react-native-firebase/auth";
+import firestore from "@react-native-firebase/firestore";
+
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
@@ -82,6 +84,14 @@ export default function RegisterScreen() {
 					auth()
 						.createUserWithEmailAndPassword(email, password)
 						.then(() => {
+							const userCollection = firestore().collection("users");
+							userCollection.doc(auth().currentUser?.uid).set({
+								lastname: lastname,
+								firstname: firstname,
+								email: email,
+								sharedid: "Id not set",
+							});
+
 							dispatch(
 								setUser({
 									id: auth().currentUser?.uid,

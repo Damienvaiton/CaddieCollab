@@ -5,7 +5,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { getUser, setUser } from "../../store/userSlice";
+import { clearUser, getUser, setUser } from "../../store/userSlice";
 
 import styles from "../../styles/DefaultStyles";
 import { TextInput } from "react-native-gesture-handler";
@@ -64,13 +64,12 @@ export default function ProfileScreen({
 					<Text style={styles.textItemSecondary}>
 						Welcome {user.firstname} {user.lastname}
 					</Text>
-					<Text style={styles.textItemSecondary}>Email: {user.email}</Text>
+					<Button title="Logout" onPress={() => dispatch(clearUser())} />
 				</View>
 			) : (
 				<View>
 					<Button title="Login" onPress={() => navigation.navigate("Login")} />
 					<Text style={styles.textItemSecondary}>Please login</Text>
-					<Text style={styles.textItemSecondary}>id in store: {user.id}</Text>
 				</View>
 			)}
 		</View>

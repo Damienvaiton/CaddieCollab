@@ -43,6 +43,9 @@ const userSlice = createSlice({
 			state.username = action.payload.username;
 			state.sharedid = action.payload.sharedid;
 
+			// Display all the user data in the console
+			console.log(" data : " + state .id + " " + state.email + " " + state.password + " " + state.lastname + " " + state.firstname + " " + state.username + " " + state.sharedid);
+
 			AsyncStorage.setItem("user", JSON.stringify(action.payload));
 		},
 		clearUser: (state) => {
