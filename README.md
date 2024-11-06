@@ -16,29 +16,21 @@ CaddieCollab is a collaborative shopping list application that helps users manag
 
 ## Usage in Development
 
-You have two options to view the app on your mobile device:
+> ⚠ **Important**: Do not use the Expo Go app to view this project. Use one of the following methods instead.
 
 Choose one of the following options:
 
-1. Open the app in a emulator
+1. Open the app in a emulator of a mobile device.
 
 ```bash
-npm start
+npx expo run:android
 ```
 
 ```bash
-npm run android
+npx expo run:ios
 ```
 
-```bash
-npm run ios
-```
 
-2. Download the Expo Go app on your mobile device and scan the QR code displayed in the terminal.
-
-   ```bash
-   npm start
-   ```
 
 ## Usage in Production
 
