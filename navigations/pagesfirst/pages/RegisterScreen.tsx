@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
-import { View, TextInput, Button, Image } from "react-native";
+import { View, TextInput, Button, Image, Pressable } from "react-native";
 import styles from "../../../styles/DefaultStyles";
 
 import auth from "@react-native-firebase/auth";
@@ -31,15 +31,22 @@ export default function RegisterScreen() {
 
 	return (
 		<View style={styles.container}>
-			<Image
-				source={require("../../../assets/logo.png")}
-				style={{
-					width: 150,
-					height: 150,
-					marginRight: 5,
-					marginBottom: 20,
+			<Pressable
+				onPress={() => {
+					// Get the user from the store without using the variable user, the goal is to show that we can get the user from the store
+					console.log(user);
 				}}
-			/>
+			>
+				<Image
+					source={require("../../../assets/logo.png")}
+					style={{
+						width: 150,
+						height: 150,
+						marginRight: 5,
+						marginBottom: 20,
+					}}
+				/>
+			</Pressable>
 
 			<TextInput
 				style={styles.input}
@@ -75,8 +82,22 @@ export default function RegisterScreen() {
 					auth()
 						.createUserWithEmailAndPassword(email, password)
 						.then(() => {
-							dispatch(setUser({ email, firstname, lastname }));
+							dispatch(
+								setUser({
+									id: auth().currentUser?.uid,
+									email: email,
+									password: password,
+									lastname: lastname,
+									firstname: firstname,
+									username: "",
+									sharedid: "Id not set",
+								})
+							);
+
+							console.log("User account created & signed in!");
+							
 							console.log(dispatch(getUser()));
+
 							navigation.navigate("Home");
 						})
 						.catch((error) => {

@@ -12,6 +12,7 @@ import { setUser } from "../../../store/userSlice";
 type RootStackParamList = {
 	Home: undefined;
 	Login: undefined;
+	Register: undefined;
 };
 
 type LoginScreenNavigationProp = StackNavigationProp<
@@ -25,7 +26,7 @@ export default function LoginScreen() {
 	const navigation = useNavigation<LoginScreenNavigationProp>();
 
 	const user = useSelector((state: RootState) => state.user);
-    const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
 	return (
 		<View style={styles.container}>
@@ -60,9 +61,12 @@ export default function LoginScreen() {
 					auth()
 						.signInWithEmailAndPassword(email, password)
 						.then(() => {
-
-
-
+							dispatch(
+								setUser({
+									email: email,
+									password: password,
+								})
+							);
 							navigation.navigate("Home");
 						})
 						.catch((error) => {
@@ -76,6 +80,13 @@ export default function LoginScreen() {
 
 							console.error(error);
 						});
+				}}
+			/>
+
+			<Button
+				title="Sign Up"
+				onPress={() => {
+					navigation.navigate("Register");
 				}}
 			/>
 		</View>

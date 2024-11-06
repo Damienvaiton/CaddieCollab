@@ -5,12 +5,15 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { Ionicons } from "@expo/vector-icons";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
+import { useAppDispatch, useAppSelector } from "../store/hooks"; // Importez les hooks typés
+import { loadUserAsync } from "../store/userSlice";
+
 // Pages imports
-import HomeScreen from "./pagesfirst/HomeScreen"; // Assurez-vous que ce fichier n'a pas d'erreurs de texte
-import SharedListsScreen from "./pagesfirst/SharedListsScreen"; // Assurez-vous que ce fichier n'a pas d'erreurs de texte
-import ProfileScreen from "./pagesfirst/ProfileScreen"; // Votre écran de profil
-import RegisterScreen from "./pagesfirst/pages/RegisterScreen"; // Votre écran d'inscription
-import LoginScreen from "./pagesfirst/pages/LoginScreen"; // Votre écran de connexion
+import HomeScreen from "./pagesfirst/HomeScreen";
+import SharedListsScreen from "./pagesfirst/SharedListsScreen";
+import ProfileScreen from "./pagesfirst/ProfileScreen";
+import RegisterScreen from "./pagesfirst/pages/RegisterScreen";
+import LoginScreen from "./pagesfirst/pages/LoginScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -26,12 +29,12 @@ function MainStack() {
 			<Stack.Screen
 				name="Register"
 				component={RegisterScreen}
-				options={{ headerShown: false }} // Masquer l'en-tête de la modale
+				options={{ headerShown: false }}
 			/>
 			<Stack.Screen
 				name="Login"
 				component={LoginScreen}
-				options={{ headerShown: false }} // Masquer l'en-tête de la modale
+				options={{ headerShown: false }}
 			/>
 		</Stack.Navigator>
 	);
@@ -64,6 +67,12 @@ function MainTabs() {
 }
 
 export default function MainController() {
+	const dispatch = useAppDispatch(); // Utilisez useAppDispatch au lieu de useDispatch
+
+	React.useEffect(() => {
+		dispatch(loadUserAsync());
+	}, []);
+
 	return (
 		<GestureHandlerRootView style={{ flex: 1 }}>
 			<NavigationContainer>
