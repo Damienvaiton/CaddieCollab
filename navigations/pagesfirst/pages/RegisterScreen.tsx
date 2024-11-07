@@ -84,13 +84,26 @@ export default function RegisterScreen() {
 					auth()
 						.createUserWithEmailAndPassword(email, password)
 						.then(() => {
-							const userCollection = firestore().collection("users");
+							const userCollection = firestore().collection("Users");
 							userCollection.doc(auth().currentUser?.uid).set({
+								id: auth().currentUser?.uid,
 								lastname: lastname,
 								firstname: firstname,
 								email: email,
-								sharedid: "Id not set",
+								username: "No username implemented",
+								sharedid: "Shared id not implemented",
 							});
+							// Create the collection Lists for the user inside the collection Users
+
+							const listCollection = userCollection.doc(auth().currentUser?.uid).collection("Lists");
+							listCollection.add({
+								name: "Ma première liste",
+								count: 0,
+							});
+
+
+						
+							
 
 							dispatch(
 								setUser({

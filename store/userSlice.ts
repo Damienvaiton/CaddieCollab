@@ -37,21 +37,19 @@ const userSlice = createSlice({
 		setUser: (state, action) => {
 			state.id = action.payload.id;
 			state.email = action.payload.email;
-			state.password = action.payload.password;
 			state.lastname = action.payload.lastname;
 			state.firstname = action.payload.firstname;
 			state.username = action.payload.username;
 			state.sharedid = action.payload.sharedid;
 
 			// Display all the user data in the console
-			console.log(" data : " + state .id + " " + state.email + " " + state.password + " " + state.lastname + " " + state.firstname + " " + state.username + " " + state.sharedid);
+			console.log(" data : \n id : " + action.payload.id + "\n email : " + action.payload.email + "\n password : " + action.payload.password + "\n lastname : " + action.payload.lastname + "\n firstname : " + action.payload.firstname + "\n username : " + action.payload.username + "\n sharedid : " + action.payload.sharedid);
 
 			AsyncStorage.setItem("user", JSON.stringify(action.payload));
 		},
 		clearUser: (state) => {
 			state.id = "";
 			state.email = "";
-			state.password = "";
 			state.lastname = "";
 			state.firstname = "";
 			state.username = "";
@@ -70,7 +68,6 @@ const userSlice = createSlice({
 				console.log("id : " + action.payload.id);
 				state.id = action.payload.id;
 				state.email = action.payload.email;
-				state.password = action.payload.password;
 				state.lastname = action.payload.lastname;
 				state.firstname = action.payload.firstname;
 				state.username = action.payload.username;
@@ -78,7 +75,6 @@ const userSlice = createSlice({
 			} else {
 				state.id = "";
 				state.email = "";
-				state.password = "";
 				state.lastname = "";
 				state.firstname = "";
 				state.username = "";

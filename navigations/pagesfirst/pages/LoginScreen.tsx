@@ -8,7 +8,6 @@ import { RootState } from "../../../store/store";
 import auth from "@react-native-firebase/auth";
 import firestore from "@react-native-firebase/firestore";
 
-
 import { StackNavigationProp } from "@react-navigation/stack";
 import { setUser } from "../../../store/userSlice";
 
@@ -65,12 +64,34 @@ export default function LoginScreen() {
 					auth()
 						.signInWithEmailAndPassword(email, password)
 						.then(() => {
-							dispatch(
-								setUser({
-									email: email,
-									password: password,
-								})
-							);
+							const idUser = auth().currentUser?.uid;
+							console.log("idUser " + idUser);
+
+							firestore()
+								.collection("Users")
+								.doc(idUser)
+								.get()
+								.then((documentSnapshot) => {
+									if (documentSnapshot.exists) {
+										const user = documentSnapshot.data();
+										console.log(
+											"firestore user " + user?.firstname + " " + user?.lastname
+										);
+										dispatch(
+											setUser({
+												id: idUser,
+												lastname: user?.lastname,
+												firstname: user?.firstname,
+												email: email,
+												username: user?.username ? user?.username : "",
+												sharedid: user?.sharedid ? user?.sharedid : "",
+											})
+										);
+									} else {
+										console.log("User with id " + idUser + " does not exist");
+									}
+								});
+
 							navigation.navigate("Profile");
 						})
 						.catch((error) => {
