@@ -93,12 +93,16 @@ export default function RegisterScreen() {
 								username: "No username implemented",
 								sharedid: "Shared id not implemented",
 							});
-							// Create the collection Lists for the user inside the collection Users
 
 							const listCollection = userCollection.doc(auth().currentUser?.uid).collection("Lists");
 							listCollection.add({
 								name: "Ma première liste",
-								count: 0,
+								count: 5,
+							});
+
+							listCollection.add({
+								name: "Ma deuxième liste",
+								count: 21,
 							});
 
 

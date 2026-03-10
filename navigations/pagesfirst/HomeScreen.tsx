@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	Text,
 	View,
@@ -15,6 +15,9 @@ import { ScrollView } from "react-native-gesture-handler";
 import styles from "../../styles/DefaultStyles";
 import { useCustomFonts } from "../../styles/useCustomFonts";
 
+import auth from "@react-native-firebase/auth";
+import firestore from "@react-native-firebase/firestore";
+
 type RootStackParamList = {
 	Home: undefined;
 	Details: undefined;
@@ -22,27 +25,23 @@ type RootStackParamList = {
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
-const ListExemple = [
-	{ id: 1, name: "Janvier 2021", count: 3 },
-	{ id: 2, name: "Février 2021", count: 2 },
-	{ id: 3, name: "Mars 2021", count: 5 },
-	{ id: 4, name: "Avril 2021", count: 1 },
-	{ id: 5, name: "Mai 2021", count: 0 },
-	{ id: 6, name: "Juin 2021", count: 4 },
-	{ id: 7, name: "Juillet 2021", count: 3 },
-	{ id: 8, name: "Août 2021", count: 2 },
-	{ id: 9, name: "Septembre 2021", count: 5 },
-	{ id: 10, name: "Octobre 2021", count: 1 },
-	{ id: 11, name: "Novembre 2021", count: 0 },
-	{ id: 12, name: "Décembre 2021", count: 4 },
-];
+type List = {
+	id: string;
+	name: string;
+	count: number;
+};
 
 export default function HomeScreen({
 	navigation,
 }: {
 	navigation: HomeScreenNavigationProp;
 }) {
-	const [modalVisible, setModalVisible] = useState(false);
+	const [list, setList] = useState<List[]>([]);
+	const [addModalVisible, setAddModalVisible] = useState(false);
+	const [modifyModalVisible, setModifyModalVisible] = useState(false);
+	const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+	const [selectedList, setSelectedList] = useState<List | null>(null);
+	const [newListName, setNewListName] = useState<string>("");
 
 	const fontsLoaded = useCustomFonts(); // Chargement des polices
 
@@ -63,7 +62,105 @@ export default function HomeScreen({
 				/>
 			),
 		});
-	}, [navigation]);
+	}, [navigation, list.length]);
+
+	useEffect(() => {
+		const idUser = auth().currentUser?.uid;
+		const Lists = firestore()
+			.collection("Users")
+			.doc(idUser)
+			.collection("Lists");
+
+		const unsubscribe = Lists.onSnapshot((querySnapshot) => {
+			const newList: List[] = [];
+			querySnapshot.forEach((doc) => {
+				newList.push({
+					id: doc.id,
+					name: doc.data().name,
+					count: doc.data().count,
+				});
+			});
+			setList(newList);
+		});
+
+		return unsubscribe;
+	}, []);
+
+	const handleDelete = (listToDelete: List) => {
+		const idUser = auth().currentUser?.uid;
+		const ListRef = firestore()
+			.collection("Users")
+			.doc(idUser)
+			.collection("Lists")
+			.doc(listToDelete.id);
+
+		Alert.alert(
+			"Supprimer la liste",
+			`Voulez-vous vraiment supprimer la liste "${listToDelete.name}" ?`,
+			[
+				{ text: "Annuler", style: "cancel" },
+				{
+					text: "Supprimer",
+					style: "destructive",
+					onPress: () => {
+						ListRef.delete()
+							.then(() => {
+								console.log(`Liste "${listToDelete.name}" supprimée.`);
+								setDeleteModalVisible(false);
+							})
+							.catch((error) => {
+								console.error(
+									"Erreur lors de la suppression de la liste : ",
+									error
+								);
+							});
+					},
+				},
+			]
+		);
+	};
+
+	const handleModify = (listToModify: List) => {
+		const idUser = auth().currentUser?.uid;
+		const ListRef = firestore()
+			.collection("Users")
+			.doc(idUser)
+			.collection("Lists")
+			.doc(listToModify.id);
+
+		ListRef.update({ name: newListName })
+			.then(() => {
+				console.log(
+					`Liste "${listToModify.name}" modifiée en "${newListName}".`
+				);
+				setNewListName("");
+				setModifyModalVisible(false);
+			})
+			.catch((error) => {
+				console.error("Erreur lors de la modification de la liste : ", error);
+			});
+	};
+
+	const handleAddList = () => {
+		const idUser = auth().currentUser?.uid;
+		const ListsRef = firestore()
+			.collection("Users")
+			.doc(idUser)
+			.collection("Lists");
+
+		ListsRef.add({
+			name: newListName,
+			count: 0,
+		})
+			.then(() => {
+				console.log("Nouvelle liste ajoutée.");
+				setNewListName("");
+				setAddModalVisible(false);
+			})
+			.catch((error) => {
+				console.error("Erreur lors de l'ajout de la nouvelle liste : ", error);
+			});
+	};
 
 	if (!fontsLoaded) {
 		return <Text>Chargement...</Text>; // Afficher un écran de chargement en attendant
@@ -72,14 +169,19 @@ export default function HomeScreen({
 	return (
 		<View style={{ flex: 1 }}>
 			<ScrollView style={styles.list}>
-				{ListExemple.map((list) => (
+				{list.map((item) => (
 					<TouchableOpacity
-						key={list.id}
+						key={item.id}
 						style={styles.listItem}
 						onPress={() => {
 							console.log(
-								`Ouverture de la liste ${list.name} dont l'id est ${list.id}`
+								`Ouverture de la liste ${item.name} dont l'id est ${item.id}`
 							);
+						}}
+						onLongPress={() => {
+							setSelectedList(item);
+							setNewListName(item.name);
+							setModifyModalVisible(true);
 						}}
 					>
 						<View
@@ -89,36 +191,18 @@ export default function HomeScreen({
 								justifyContent: "space-between",
 							}}
 						>
-							<Text style={styles.textItemPrimary}>{list.name}</Text>
-							<TouchableOpacity
+							<Text style={styles.textItemPrimary}>{item.name}</Text>
+							<Pressable
 								onPress={() => {
-									Alert.alert("Que voulez-vous faire ?", "", [
-										{
-											text: "Annuler",
-											style: "cancel",
-											onPress: () =>
-												console.log("Annulation de la suppression"),
-										},
-										{
-											text: "Supprimer",
-											style: "destructive",
-											onPress: () =>
-												console.log("Suppression de la liste n°" + list.id),
-										},
-										{
-											text: "Modifier",
-											style: "destructive",
-											onPress: () =>
-												console.log("Modification de la liste n°" + list.id),
-										},
-									]);
+									setSelectedList(item);
+									setDeleteModalVisible(true);
 								}}
 							>
 								<Image
-									source={require("../../assets/tp.webp")}
+									source={require("../../assets/delete.webp")}
 									style={{ width: 20, height: 20 }}
 								/>
-							</TouchableOpacity>
+							</Pressable>
 						</View>
 						<View
 							style={{
@@ -127,8 +211,8 @@ export default function HomeScreen({
 						>
 							<View>
 								<Text style={styles.textItemSecondary}>
-									{list.count}{" "}
-									{list.count === 1 || list.count === 0
+									{item.count}{" "}
+									{item.count === 1 || item.count === 0
 										? "élément"
 										: "éléments"}
 								</Text>
@@ -137,22 +221,27 @@ export default function HomeScreen({
 					</TouchableOpacity>
 				))}
 			</ScrollView>
+
+			{/* Modal d'ajout */}
 			<Modal
 				animationType="fade"
 				transparent={true}
-				visible={modalVisible}
+				visible={addModalVisible}
 				onRequestClose={() => {
-					Alert.alert("Modal has been closed.");
-					setModalVisible(!modalVisible);
+					setAddModalVisible(!addModalVisible);
+					setNewListName("");
 				}}
 			>
 				<View style={styles.centeredView}>
 					<View style={styles.modalView}>
-						<Text style={styles.modalTextTitle}>Ajouter une liste</Text>
+						<Text style={styles.modalTextTitle}>
+							Ajouter une nouvelle liste
+						</Text>
 						<TextInput
 							style={styles.modalTextInput}
 							placeholder="Nom de la liste"
-							onChangeText={(text) => console.log(`L'appareil a dit ${text}`)}
+							value={newListName}
+							onChangeText={(text) => setNewListName(text)}
 						/>
 						<View
 							style={{
@@ -163,7 +252,10 @@ export default function HomeScreen({
 						>
 							<Pressable
 								style={[styles.buttonClose, { backgroundColor: "red" }]}
-								onPress={() => setModalVisible(!modalVisible)}
+								onPress={() => {
+									setAddModalVisible(!addModalVisible);
+									setNewListName("");
+								}}
 							>
 								<Text style={styles.buttonText}>Annuler</Text>
 							</Pressable>
@@ -173,9 +265,119 @@ export default function HomeScreen({
 									{ backgroundColor: "green" },
 									{ marginLeft: 10 },
 								]}
-								onPress={() => setModalVisible(!modalVisible)}
+								onPress={handleAddList}
 							>
-								<Text style={styles.buttonText}>Valider</Text>
+								<Text style={styles.buttonText}>Ajouter</Text>
+							</Pressable>
+						</View>
+					</View>
+				</View>
+			</Modal>
+
+			{/* Modal de modification */}
+			<Modal
+				animationType="fade"
+				transparent={true}
+				visible={modifyModalVisible}
+				onRequestClose={() => {
+					setModifyModalVisible(!modifyModalVisible);
+					setNewListName("");
+					setSelectedList(null);
+				}}
+			>
+				<View style={styles.centeredView}>
+					<View style={styles.modalView}>
+						<Text style={styles.modalTextTitle}>Modifier la liste</Text>
+						<TextInput
+							style={styles.modalTextInput}
+							placeholder="Nom de la liste"
+							value={newListName}
+							onChangeText={(text) => setNewListName(text)}
+						/>
+						<View
+							style={{
+								flexDirection: "row",
+								justifyContent: "space-between",
+								alignItems: "center",
+							}}
+						>
+							<Pressable
+								style={[styles.buttonClose, { backgroundColor: "red" }]}
+								onPress={() => {
+									setModifyModalVisible(!modifyModalVisible);
+									setNewListName("");
+									setSelectedList(null);
+								}}
+							>
+								<Text style={styles.buttonText}>Annuler</Text>
+							</Pressable>
+							<Pressable
+								style={[
+									styles.buttonClose,
+									{ backgroundColor: "green" },
+									{ marginLeft: 10 },
+								]}
+								onPress={() => {
+									if (selectedList) {
+										handleModify(selectedList);
+									}
+								}}
+							>
+								<Text style={styles.buttonText}>Modifier</Text>
+							</Pressable>
+						</View>
+					</View>
+				</View>
+			</Modal>
+
+			{/* Modal de suppression */}
+			<Modal
+				animationType="fade"
+				transparent={true}
+				visible={deleteModalVisible}
+				onRequestClose={() => {
+					setDeleteModalVisible(!deleteModalVisible);
+					setSelectedList(null);
+				}}
+			>
+				<View style={styles.centeredView}>
+					<View style={styles.modalView}>
+						<Text style={styles.modalTextTitle}>
+							Voulez-vous supprimer la liste "{selectedList?.name}" ?
+						</Text>
+						<View
+							style={{
+								flexDirection: "row",
+								justifyContent: "space-between",
+								alignItems: "center",
+							}}
+						>
+							<Pressable
+								style={[
+									styles.buttonClose,
+									{ backgroundColor: "red" },
+									{ marginVertical: 10 },
+								]}
+								onPress={() => {
+									setDeleteModalVisible(!deleteModalVisible);
+									setSelectedList(null);
+								}}
+							>
+								<Text style={styles.buttonText}>Annuler</Text>
+							</Pressable>
+							<Pressable
+								style={[
+									styles.buttonClose,
+									{ backgroundColor: "green" },
+									{ marginVertical: 10 },
+								]}
+								onPress={() => {
+									if (selectedList) {
+										handleDelete(selectedList);
+									}
+								}}
+							>
+								<Text style={styles.buttonText}>Supprimer</Text>
 							</Pressable>
 						</View>
 					</View>
@@ -183,7 +385,13 @@ export default function HomeScreen({
 			</Modal>
 
 			<View style={styles.fabContainer}>
-				<TouchableOpacity onPress={() => setModalVisible(true)}>
+				<TouchableOpacity
+					onPress={() => {
+						setSelectedList(null);
+						setNewListName("");
+						setAddModalVisible(true);
+					}}
+				>
 					<Text style={styles.buttonadd}>+</Text>
 				</TouchableOpacity>
 			</View>
